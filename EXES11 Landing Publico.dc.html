@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-7d073ac9-bb26-424b-a4e5-4846d57d44c5/styles.css">
+<script src="_ds/modernist-7d073ac9-bb26-424b-a4e5-4846d57d44c5/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-bg:#ffffff; --color-text:#14273c; --color-accent:#4ba7b3;
+  --font-heading:"Montserrat", system-ui, sans-serif; --font-body:"Lato", system-ui, sans-serif;
+  --x-navy:#14273c; --x-navy-d:#0d1c2b; --x-aqua:#4ba7b3; --x-aqua-d:#247b86; --x-aqua-l:#7cc4cb;
+  --x-reserva:#374d62; --x-grafite:#595959; --x-neutral:#aeafb2;
+  --x-tint:#f1f7f8; --x-line:#e4e7ea; --x-cta:#2ecfa1; --x-cta-h:#25b88d;
+  --x-shadow:0 24px 48px -28px rgba(20,39,60,.35), 0 3px 10px rgba(20,39,60,.05);
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--x-navy);font-family:var(--font-body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+html{overflow-x:clip}
+a{color:var(--x-aqua-d);text-decoration:none}
+a:hover{color:var(--x-navy)}
+h1,h2,h3,h4{font-family:var(--font-heading);letter-spacing:-.02em;line-height:1.16;margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid var(--x-aqua);outline-offset:3px}
+::selection{background:rgba(75,167,179,.28)}
+@keyframes exesMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@keyframes exesMarqueeRev{from{transform:translate3d(-50%,0,0)}to{transform:translate3d(0,0,0)}}
+img{max-width:100%;height:auto}
+section[id],header[id]{scroll-margin-top:96px}
+
+/* ---- Navbar: logo à esquerda, links centralizados, CTA à direita ---- */
+#navBar nav{flex:1 1 auto!important;justify-content:center!important}
+
+/* ---- Carrosséis: pausam ao passar o mouse, focar ou tocar ---- */
+[style*="animation:exesMarquee"]:hover,
+[style*="animation:exesMarqueeRev"]:hover,
+[style*="animation:exesMarquee"]:focus-within,
+[style*="animation:exesMarqueeRev"]:focus-within,
+.marq-paused{animation-play-state:paused!important}
+
+/* ---- Botões de CTA sempre centralizados ---- */
+#tese a[style*="var(--x-cta)"],
+[data-screen-label="A gestora"] a[style*="var(--x-cta)"]{align-self:center!important}
+
+/* ============================================================
+   RESPONSIVIDADE — TABLET E MOBILE
+   ============================================================ */
+
+/* ---- Tablet paisagem / telas médias (<= 1024px) ---- */
+@media (max-width:1024px){
+  #navBar > div{gap:12px 18px!important}
+  #topo{padding-left:clamp(16px,4vw,28px)!important;padding-right:clamp(16px,4vw,28px)!important}
+}
+
+/* ---- Botão de menu (hambúrguer) — só aparece em tablet/mobile ---- */
+#navMenuBtn{display:none;flex:0 0 auto;width:44px;height:44px;padding:0;
+  border:1px solid rgba(255,255,255,.28);border-radius:11px;background:rgba(255,255,255,.06);
+  cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+#navMenuBtn span{display:block;width:18px;height:2px;background:#fff;border-radius:2px;
+  transition:transform .25s ease,opacity .2s ease}
+#navBar.nav-open #navMenuBtn span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+#navBar.nav-open #navMenuBtn span:nth-child(2){opacity:0}
+#navBar.nav-open #navMenuBtn span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+#navBar nav .nav-cta{display:none}
+
+/* ---- Navbar em tablet/mobile: logo à esquerda, menu à direita ---- */
+@media (max-width:900px){
+  #navBar > div{flex-wrap:nowrap!important;justify-content:space-between!important;
+    padding-top:12px!important;padding-bottom:12px!important;gap:12px!important}
+  #navBar > div > a:first-child{margin-right:auto!important}
+  #navMenuBtn{display:inline-flex!important}
+  /* Links e CTA original somem do fluxo; entram no painel do menu */
+  #navBar > nav,#navBar > div > nav{display:none!important}
+  #navBar > div > a[style*="var(--x-cta)"]{display:none!important}
+  /* Painel aberto */
+  #navBar.nav-open nav{
+    display:flex!important;flex-direction:column!important;align-items:stretch!important;
+    position:absolute;top:100%;left:0;right:0;z-index:30;
+    background:rgba(13,28,43,.98);border-bottom:1px solid rgba(255,255,255,.14);
+    padding:10px clamp(16px,4vw,48px) 20px;gap:0!important;
+    box-shadow:0 26px 44px -22px rgba(0,0,0,.55)}
+  #navBar.nav-open nav a{padding:13px 2px;font-size:15px!important;
+    color:rgba(255,255,255,.9)!important;border-bottom:1px solid rgba(255,255,255,.08)}
+  #navBar.nav-open nav .nav-cta{display:inline-flex!important;justify-content:center;
+    border-bottom:0!important;margin-top:14px;color:#0d1c2b!important}
+}
+
+/* ---- Tablet retrato clássico e abaixo (<= 768px) ---- */
+@media (max-width:768px){
+  /* Força coluna única em todas as seções de duas colunas + centraliza */
+  #tese > div,
+  [data-screen-label="Empresas com exposição"] > div > div,
+  [data-screen-label="A gestora"] > div,
+  #viabilidade > div > div:nth-child(2){
+    grid-template-columns:1fr!important;
+    justify-items:center!important;
+  }
+  /* Conteúdo empilhado fica centralizado, não colado à esquerda */
+  #tese > div > div,
+  [data-screen-label="Empresas com exposição"] > div > div > div,
+  [data-screen-label="A gestora"] > div > div{
+    align-items:center!important;text-align:center!important;width:100%;
+  }
+  #tese h2,#tese p,
+  [data-screen-label="Empresas com exposição"] h2,
+  [data-screen-label="Empresas com exposição"] p,
+  [data-screen-label="A gestora"] h2,
+  [data-screen-label="A gestora"] p{
+    max-width:60ch!important;margin-left:auto!important;margin-right:auto!important;
+  }
+  /* Chips/CTAs que usavam align-self:flex-start passam ao centro */
+  [style*="align-self:flex-start"]{align-self:center!important}
+  /* Badge sobreposto da tese passa a fluir dentro do card */
+  #tese [style*="position:absolute"][style*="bottom:-16px"]{
+    position:static!important;margin-top:12px!important;display:inline-block!important;
+  }
+  /* Gráfico de rendimentos: rolagem horizontal em vez de esmagar o texto */
+  [data-screen-label="Histórico de rendimentos"] > div > div:nth-child(2){overflow-x:auto!important;overflow-y:visible!important}
+  svg[viewBox="0 0 1000 300"]{min-width:560px}
+  /* Reduz respiro vertical das seções */
+  section{padding-top:clamp(40px,7vw,64px)!important;padding-bottom:clamp(40px,7vw,64px)!important}
+}
+
+/* ---- Celular (<= 600px) ---- */
+@media (max-width:600px){
+  /* Aviso fixo enxuto: mantém só a frase obrigatória */
+  #avisoBar{padding:10px 16px!important}
+  #avisoBar span[style*="width:1px"],
+  #avisoBar span[style*="letter-spacing:.16em"]{display:none!important}
+  /* Tabela de concentração: esconde a barra e usa 3 colunas */
+  [style*="minmax(0,1.3fr) minmax(0,1.4fr) minmax(0,.55fr)"]{grid-template-columns:minmax(0,1fr) auto auto!important;gap:10px!important}
+  [style*="minmax(0,1.3fr) minmax(0,1.4fr) minmax(0,.55fr)"] > *:nth-child(2){display:none!important}
+  /* Títulos um pouco menores */
+  h1{font-size:clamp(25px,7.5vw,32px)!important}
+  h2{font-size:clamp(23px,6.5vw,30px)!important}
+}
+
+/* ---- "Documentos da oferta": botões lado a lado no mobile/tablet ---- */
+@media (max-width:900px){
+  #contato > div > div:last-child{flex-wrap:nowrap!important;gap:10px!important;width:100%}
+  #contato > div > div:last-child a{flex:1 1 0!important;min-width:0!important;justify-content:center;
+    white-space:normal!important;text-align:center;padding-left:16px!important;padding-right:16px!important}
+}
+
+/* ---- Celular pequeno (<= 430px) ---- */
+@media (max-width:430px){
+  /* CTAs ocupam a largura toda para alvo de toque melhor */
+  #topo a[style*="var(--x-cta)"],
+  #tese a[style*="var(--x-cta)"]{width:100%;justify-content:center;text-align:center}
+}
+
+/* ============================================================
+   ANIMAÇÕES DE ENTRADA AO ROLAR
+   ============================================================ */
+@media (prefers-reduced-motion:no-preference){
+  [data-anim]{opacity:0;transform:translateY(28px);
+    transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+  [data-anim].is-in{opacity:1;transform:none}
+  [data-anim-child]>*{opacity:0;transform:translateY(24px);
+    transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+  [data-anim-child].is-in>*{opacity:1;transform:none}
+  [data-anim-child].is-in>*:nth-child(1){transition-delay:.00s}
+  [data-anim-child].is-in>*:nth-child(2){transition-delay:.07s}
+  [data-anim-child].is-in>*:nth-child(3){transition-delay:.14s}
+  [data-anim-child].is-in>*:nth-child(4){transition-delay:.21s}
+  [data-anim-child].is-in>*:nth-child(5){transition-delay:.28s}
+  [data-anim-child].is-in>*:nth-child(6){transition-delay:.35s}
+}
+</style>
+</helmet>
+
+<div id="avisoBar" style="position:fixed;top:0;left:0;right:0;z-index:60;background:#fff;border-bottom:1px solid var(--x-line);padding:clamp(12px,1.5vw,16px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px clamp(14px,2vw,24px);align-items:center;justify-content:center;text-align:center">
+    <span style="display:inline-flex;align-items:center;gap:9px;font-family:var(--font-heading);font-weight:700;font-size:11px;letter-spacing:.16em;color:var(--x-aqua-d);text-transform:uppercase;flex:0 0 auto;white-space:nowrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16.2v.1"></path></svg>
+      Material publicitário
+    </span>
+    <span style="width:1px;height:16px;background:var(--x-line);flex:0 0 auto"></span>
+    <span style="font-size:clamp(12.5px,1.2vw,14px);line-height:1.5;color:var(--x-navy);letter-spacing:.005em">Leia o Prospecto, a Lâmina e o Regulamento do Fundo antes de aceitar a Oferta, em especial a seção <b style="font-weight:700">“Fatores de Risco”</b>.</span>
+  </div>
+</div>
+
+<div style="{{ barSpacer }}"></div>
+
+<header id="navBar" style="{{ headerStyle }}">
+  <div style="max-width:1240px;margin:0 auto;padding:14px clamp(16px,4vw,48px);display:flex;flex-wrap:wrap;align-items:center;gap:12px clamp(14px,3vw,40px)">
+    <a href="#topo" style="display:flex;align-items:center;gap:12px;margin-right:auto;min-width:0">
+      <img src="assets/logo-exes-branco.webp" alt="Éxes" style="height:24px;width:auto;display:block">
+    </a>
+    <nav style="display:flex;flex-wrap:wrap;gap:10px clamp(12px,2vw,26px);justify-content:flex-start;min-width:0">
+      <a href="#termos" style="font-family:var(--font-heading);font-size:13px;font-weight:500;color:rgba(255,255,255,.8)" style-hover="color:#fff">Termos</a>
+      <a href="#tese" style="font-family:var(--font-heading);font-size:13px;font-weight:500;color:rgba(255,255,255,.8)" style-hover="color:#fff">A tese</a>
+      <a href="#carteira" style="font-family:var(--font-heading);font-size:13px;font-weight:500;color:rgba(255,255,255,.8)" style-hover="color:#fff">Carteira</a>
+      <a href="#viabilidade" style="font-family:var(--font-heading);font-size:13px;font-weight:500;color:rgba(255,255,255,.8)" style-hover="color:#fff">Projeção</a>
+      <a href="#riscos" style="font-family:var(--font-heading);font-size:13px;font-weight:500;color:rgba(255,255,255,.8)" style-hover="color:#fff">Riscos</a>
+    </nav>
+    <a href="{{ ctaHref }}" style="background:var(--x-cta);color:#0d1c2b;padding:11px 22px;border-radius:999px;font-family:var(--font-heading);font-size:13px;font-weight:700;white-space:nowrap;flex:0 0 auto" style-hover="background:var(--x-cta-h)">{{ ctaShort }}</a>
+  </div>
+</header>
+
+<section id="topo" data-screen-label="Hero" style="position:relative;background:linear-gradient(100deg,#0d1c2b 0%,#0d1c2b 50%,#14273c 100%);color:#fff;overflow:hidden;padding:clamp(44px,6vw,84px) clamp(16px,4vw,48px) clamp(104px,12vw,150px)">
+  <div style="position:absolute;inset:-24px;z-index:0;filter:blur(7px);transform:scale(1.05)">
+    <image-slot id="exesHeroBg2" shape="rect" fit="cover" bare="" src="assets/hero.webp" placeholder="Solte aqui a imagem de fundo do hero" style="background:transparent;opacity:.9"></image-slot>
+  </div>
+  <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(13,28,43,.72) 0%, rgba(13,28,43,.6) 45%, rgba(13,28,43,.78) 100%)"></div>
+  <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(0deg, #0d1c2b 0%, rgba(13,28,43,.35) 20%, transparent 50%)"></div>
+
+  <div style="position:relative;z-index:2;max-width:1240px;margin:0 auto">
+    <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px;min-width:0">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua);text-transform:uppercase">1ª Oferta Pública de Distribuição Secundária de Cotas</span>
+      <h1 style="font-size:clamp(29px,4.6vw,58px);font-weight:700;line-height:1.1;text-wrap:pretty">EXES11 é o <span style="color:var(--x-aqua)">2º em dividend yield patrimonial</span> entre 87 FIIs de recebíveis (jun/2026)</h1>
+      <p style="font-size:clamp(16px,1.7vw,19px);color:rgba(255,255,255,.82);max-width:58ch;text-wrap:pretty">Preço da oferta de R$ 9,50 por cota, 1,82% abaixo da cota patrimonial de R$ 9,68 em 31/07/2026.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:center;margin-top:6px">
+        <a href="{{ ctaHref }}" style="display:inline-flex;align-items:center;gap:10px;background:var(--x-cta);color:#0d1c2b;padding:15px 28px;border-radius:999px;font-family:var(--font-heading);font-size:14px;font-weight:700;max-width:100%" style-hover="background:var(--x-cta-h)">
+          {{ ctaLabel }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
+      </div>
+      <div style="height:1px;background:rgba(255,255,255,.18);margin-top:clamp(14px,2.5vw,26px)"></div>
+      <div style="overflow:hidden;width:100%;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)">
+        <div style="display:flex;width:max-content;animation:exesMarquee 34s linear infinite">
+          <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;align-items:baseline;gap:12px;padding-right:clamp(28px,4vw,52px);white-space:nowrap">
+              <span style="font-family:var(--font-heading);font-weight:700;font-size:clamp(22px,2.6vw,30px);color:var(--x-aqua);line-height:1">{{ s.big }}</span>
+              <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62)">{{ s.label }}</span>
+              <span style="width:1px;height:22px;background:rgba(255,255,255,.22);display:inline-block;margin-left:clamp(4px,1vw,14px)"></span>
+            </div>
+          </sc-for>
+          <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;align-items:baseline;gap:12px;padding-right:clamp(28px,4vw,52px);white-space:nowrap" aria-hidden="true">
+              <span style="font-family:var(--font-heading);font-weight:700;font-size:clamp(22px,2.6vw,30px);color:var(--x-aqua);line-height:1">{{ s.big }}</span>
+              <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62)">{{ s.label }}</span>
+              <span style="width:1px;height:22px;background:rgba(255,255,255,.22);display:inline-block;margin-left:clamp(4px,1vw,14px)"></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    <p style="font-size:12px;line-height:1.55;color:rgba(255,255,255,.6);max-width:104ch;margin-top:clamp(20px,3vw,34px);text-align:center">O INVESTIMENTO NAS COTAS REPRESENTA UM INVESTIMENTO DE RISCO. A rentabilidade passada não representa garantia de rentabilidade futura. Ranking de DY patrimonial apurado com dados Comdinheiro, data-base junho/2026, entre 87 FIIs de recebíveis; DY patrimonial = proventos de 12 meses ÷ cota patrimonial contábil; entram no ranking mensal os fundos com dados publicados no mês (70 a 76 por mês) e as distribuições de alguns fundos incluem amortizações. Cota patrimonial de 31/07/2026 informada pelo BTG Pactual Serviços Financeiros S.A. DTVM. O deságio na aquisição não representa promessa, garantia ou expectativa de retorno.</p>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Destaques" style="background:var(--x-tint);padding:0 clamp(16px,4vw,48px) clamp(48px,6vw,80px)">
+  <div style="{{ destGridStyle }}">
+    <sc-for list="{{ destaques }}" as="d" hint-placeholder-count="3">
+      <div style="background:#fff;border-radius:14px;padding:clamp(22px,2.6vw,30px);box-shadow:var(--x-shadow);display:flex;flex-direction:column;gap:16px">
+        <span style="width:46px;height:46px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);flex:0 0 auto">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ d.icon }}"></path></svg>
+        </span>
+        <h3 style="font-size:17px;font-weight:700;line-height:1.4">{{ d.t }}</h3>
+      </div>
+    </sc-for>
+  </div>
+  <div style="{{ destCarStyle }}">
+    <div style="display:flex;width:max-content;animation:exesMarquee 30s linear infinite">
+      <sc-for list="{{ destaques }}" as="d" hint-placeholder-count="3">
+        <div style="width:268px;flex:0 0 auto;margin-right:16px;background:#fff;border-radius:14px;padding:24px;box-shadow:var(--x-shadow);display:flex;flex-direction:column;gap:14px">
+          <span style="width:46px;height:46px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);flex:0 0 auto">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ d.icon }}"></path></svg>
+          </span>
+          <h3 style="font-size:16px;font-weight:700;line-height:1.4">{{ d.t }}</h3>
+        </div>
+      </sc-for>
+      <sc-for list="{{ destaques }}" as="d" hint-placeholder-count="3">
+        <div style="width:268px;flex:0 0 auto;margin-right:16px;background:#fff;border-radius:14px;padding:24px;box-shadow:var(--x-shadow);display:flex;flex-direction:column;gap:14px" aria-hidden="true">
+          <span style="width:46px;height:46px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);flex:0 0 auto">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ d.icon }}"></path></svg>
+          </span>
+          <h3 style="font-size:16px;font-weight:700;line-height:1.4">{{ d.t }}</h3>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1240px;margin:clamp(22px,3vw,34px) auto 0">
+    <p style="font-size:12.5px;line-height:1.6;color:var(--x-grafite)">Fonte: Éxes e Comdinheiro (www.comdinheiro.com.br) — 87 FIIs de recebíveis, data-base junho/2026; DY patrimonial = proventos de 12 meses ÷ cota patrimonial contábil; entram no ranking mensal os fundos com dados publicados no respectivo mês (70 a 76 fundos por mês); distribuições de alguns fundos incluem amortizações e eventos não recorrentes. A isenção de Imposto de Renda observa a Lei 11.033/2004 e as condições legais aplicáveis a cada investidor. A rentabilidade passada não representa garantia de rentabilidade futura.</p>
+  </div>
+</section>
+
+<section id="termos" data-screen-label="Termos da oferta" style="background:#fff;padding:clamp(52px,7vw,100px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:820px;margin:0 auto clamp(28px,4vw,46px)">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua-d);text-transform:uppercase">Termos da oferta</span>
+      <h2 style="font-size:clamp(26px,3.6vw,44px);font-weight:700;max-width:none;margin:0 auto">Uma oferta secundária,<br>sem emissão de novas cotas.</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:clamp(2px,1vw,10px)">
+      <sc-for list="{{ termosRows }}" as="row" hint-placeholder-count="2">
+        <div style="overflow-x:hidden;overflow-y:visible;padding:22px 0;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)">
+          <div style="{{ row.track }}">
+            <sc-for list="{{ row.items }}" as="t" hint-placeholder-count="10">
+              <div style="width:clamp(250px,72vw,300px);min-height:250px;flex:0 0 auto;margin-right:16px;background:#fff;border-radius:16px;box-shadow:var(--x-shadow);padding:24px;display:flex;flex-direction:column">
+                <span style="width:44px;height:44px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);margin-bottom:16px;flex:0 0 auto">
+                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ t.icon }}"></path></svg>
+                </span>
+                <h3 style="font-family:var(--font-heading);font-size:16px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px">{{ t.t }}</h3>
+                <p style="font-size:14px;line-height:1.55;color:var(--x-grafite)">{{ t.v }}</p>
+                <div style="font-family:var(--font-heading);font-size:clamp(22px,2.4vw,28px);font-weight:700;color:var(--x-aqua);line-height:1;margin-top:auto;padding-top:20px">{{ t.hi }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:clamp(20px,3vw,30px);background:var(--x-navy);color:#fff;border-radius:14px;padding:clamp(20px,2.6vw,32px)">
+      <p style="font-size:15.5px;line-height:1.65;font-weight:700;color:#fff">O registro da Oferta na CVM não implica garantia de veracidade das informações prestadas, nem julgamento sobre a qualidade do Fundo. Por se tratar de rito automático, os documentos da Oferta não foram objeto de análise prévia pela CVM.</p>
+      <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.7);margin-top:12px">Ofertante: Éxes Crédito Direto II Fundo de Investimento Financeiro Multimercado, fundo cotista do EXES11. Registro CVM/SRE/AUT/FII/SEC/2026/005, de 02/09/2026. Fonte: documentos da Oferta.</p>
+    </div>
+  </div>
+</section>
+
+<section id="tese" data-screen-label="A tese do fundo" style="background:var(--x-tint);padding:clamp(52px,7vw,100px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(34px,5vw,68px);align-items:center">
+    <div style="position:relative;min-width:0">
+      <div style="border-radius:16px;overflow:hidden;box-shadow:var(--x-shadow);aspect-ratio:4/5">
+        <image-slot id="exesTeseFoto3" src="assets/tese.webp" shape="rect" fit="cover" placeholder="Solte aqui uma imagem da tese"></image-slot>
+      </div>
+      <div style="position:absolute;right:0;bottom:-16px;background:var(--x-navy);color:#fff;border-radius:14px;padding:16px 22px;box-shadow:var(--x-shadow)">
+        <div style="font-family:var(--font-heading);font-size:25px;font-weight:700;color:var(--x-aqua);line-height:1">19 meses</div>
+        <div style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-top:6px">R$ 0,13 por cota</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua-d);text-transform:uppercase">A tese do fundo</span>
+      <h2 style="font-size:clamp(26px,3.6vw,44px);font-weight:700;max-width:26ch">Crédito imobiliário estruturado, com garantias reais e monitoramento independente.</h2>
+      <p style="font-size:16.5px;color:var(--x-grafite);max-width:60ch;text-wrap:pretty">O EXES11 investe majoritariamente em crédito imobiliário estruturado (CRIs), com garantias reais e monitoramento independente. A carteira é majoritariamente originada e estruturada pela própria gestora, o que dá mais controle sobre os termos de cada operação.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
+        <sc-for list="{{ pilares }}" as="p" hint-placeholder-count="4">
+          <div style="display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:12px;padding:14px 18px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ba7b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;margin-top:3px" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 12.5l2.5 2.5 4.5-5"></path></svg>
+            <span style="font-size:15.5px;line-height:1.5;min-width:0"><b style="font-family:var(--font-heading);font-weight:700">{{ p.big }}</b> {{ p.body }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <a href="{{ ctaHref }}" style="align-self:flex-start;background:var(--x-cta);color:#0d1c2b;padding:14px 26px;border-radius:999px;font-family:var(--font-heading);font-size:14px;font-weight:700;max-width:100%" style-hover="background:var(--x-cta-h)">{{ ctaLabel }}</a>
+      <p style="font-size:12px;line-height:1.6;color:var(--x-grafite)">Fonte: Éxes Gestora de Recursos — a tese de investimento em quatro pilares e o EXES11 em números, posição de 31/07/2026; LTV médio ponderado conforme o Estudo de Viabilidade. Negociação das cotas na B3 desde junho de 2022. A rentabilidade passada não representa garantia de rentabilidade futura.</p>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Histórico de rendimentos" style="background:var(--x-navy-d);color:#fff;padding:clamp(52px,7vw,100px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(24px,3vw,36px)">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:880px;margin:0 auto">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua);text-transform:uppercase">Histórico de rendimentos</span>
+      <h2 style="font-size:clamp(26px,3.6vw,44px);font-weight:700;color:#fff">Dividend yield mensal isento e bruto<br>equivalente, jul/2024 a jul/2026.</h2>
+    </div>
+    <div style="background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:clamp(16px,2.4vw,30px)">
+      <div style="display:flex;flex-wrap:wrap;gap:14px 26px;align-items:flex-end;justify-content:space-between;margin-bottom:18px">
+        <div style="display:flex;flex-wrap:wrap;gap:10px 20px">
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75)"><i style="width:14px;height:3px;background:var(--x-aqua);display:block"></i>Yield mensal — isento</span>
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75)"><i style="width:14px;height:3px;background:#aeafb2;display:block"></i>Bruto equivalente</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline">
+          <span style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.1em;color:#fff;text-transform:uppercase">{{ rd.mes }}</span>
+          <span style="font-size:13px;color:rgba(255,255,255,.72)">Isento <b style="color:var(--x-aqua);font-family:var(--font-heading);font-size:17px">{{ rd.iso }}</b></span>
+          <span style="font-size:13px;color:rgba(255,255,255,.72)">Bruto eq. <b style="color:#fff;font-family:var(--font-heading);font-size:17px">{{ rd.bruto }}</b></span>
+          <span style="font-size:13px;color:rgba(255,255,255,.72)">Distribuição <b style="color:#fff;font-family:var(--font-heading);font-size:17px">{{ rd.dist }}</b></span>
+        </div>
+      </div>
+      <svg viewBox="0 0 1000 300" style="width:100%;height:auto;display:block" role="img" aria-label="Dividend yield mensal isento e bruto equivalente, jul/2024 a jul/2026">
+        <sc-for list="{{ rendTicks }}" as="g" hint-placeholder-count="4">
+          <g>
+            <line x1="54" y1="{{ g.y }}" x2="1000" y2="{{ g.y }}" stroke="rgba(255,255,255,.14)" stroke-width="1"></line>
+            <text x="46" y="{{ g.ty }}" text-anchor="end" fill="rgba(255,255,255,.55)" font-size="12" font-family="Lato, sans-serif">{{ g.label }}</text>
+          </g>
+        </sc-for>
+        <path d="{{ rendAreaB }}" fill="rgba(174,175,178,.14)"></path>
+        <path d="{{ rendAreaA }}" fill="rgba(75,167,179,.2)"></path>
+        <path d="{{ rendLineB }}" fill="none" stroke="#aeafb2" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
+        <path d="{{ rendLineA }}" fill="none" stroke="#4ba7b3" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
+        <line x1="{{ rd.x }}" y1="8" x2="{{ rd.x }}" y2="252" stroke="rgba(255,255,255,.45)" stroke-width="1" stroke-dasharray="3 3"></line>
+        <circle cx="{{ rd.x }}" cy="{{ rd.yB }}" r="5" fill="#0d1c2b" stroke="#aeafb2" stroke-width="2.5"></circle>
+        <circle cx="{{ rd.x }}" cy="{{ rd.yA }}" r="5.5" fill="#0d1c2b" stroke="#4ba7b3" stroke-width="3"></circle>
+        <sc-for list="{{ rendCols }}" as="c" hint-placeholder-count="25">
+          <g>
+            <rect x="{{ c.x }}" y="0" width="{{ c.w }}" height="252" fill="transparent" onMouseEnter="{{ c.on }}" onFocus="{{ c.on }}" tabindex="0" style="cursor:crosshair;outline:none"></rect>
+            <text x="{{ c.cx }}" y="278" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="11" font-family="Lato, sans-serif">{{ c.tick }}</text>
+          </g>
+        </sc-for>
+      </svg>
+      <p style="font-size:12px;line-height:1.55;color:rgba(255,255,255,.62);margin-top:16px">Yield mensal isento: rendimento distribuído no mês dividido pela cota patrimonial do último dia útil do respectivo mês. Bruto equivalente: o que uma aplicação tributada a 15% precisaria render para entregar o mesmo valor líquido. Fonte: BTG Pactual Serviços Financeiros S.A. DTVM; apuração da Éxes Gestora de Recursos. A rentabilidade passada não representa garantia de rentabilidade futura.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(18px,2.5vw,28px)">
+      <sc-for list="{{ acum }}" as="a" hint-placeholder-count="3">
+        <div style="border-top:2px solid {{ a.ink }};padding-top:16px">
+          <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)">{{ a.name }}</div>
+          <div style="font-family:var(--font-heading);font-size:clamp(30px,4.2vw,48px);font-weight:700;line-height:1;margin:10px 0 14px;color:{{ a.ink }}">{{ a.value }}</div>
+          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden">
+            <div style="height:8px;width:{{ a.barW }};background:{{ a.ink }};border-radius:999px"></div>
+          </div>
+          <div style="font-size:13px;color:rgba(255,255,255,.68);margin-top:12px">{{ a.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <p style="font-size:12px;line-height:1.55;color:rgba(255,255,255,.6)">Retorno total acumulado — EXES11 × IFIX × IPCA, base 100, de 06/2022 (início da negociação das cotas na B3) a 07/2026. Fonte: Éxes, Mais Retorno e B3. A rentabilidade passada não representa garantia de rentabilidade futura; a rentabilidade divulgada não é líquida de impostos, excetuados os rendimentos distribuídos a pessoas físicas.</p>
+  </div>
+</section>
+
+<section id="carteira" data-screen-label="A carteira em números" style="background:#fff;padding:clamp(52px,7vw,100px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:820px;margin:0 auto clamp(28px,4vw,46px)">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua-d);text-transform:uppercase">A carteira em números</span>
+      <h2 style="font-size:clamp(26px,3.6vw,44px);font-weight:700">Concentração por operação<br>e cobertura de garantias.</h2>
+    </div>
+
+    <div style="background:#fff;border:1px solid var(--x-line);border-radius:16px;padding:clamp(18px,2.4vw,32px);box-shadow:var(--x-shadow)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(4px,1.5vw,28px)">
+        <sc-for list="{{ concCols }}" as="col" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;min-width:0">
+            <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.4fr) minmax(0,.55fr) minmax(0,.5fr);gap:8px;padding:0 4px 8px;border-bottom:1px solid var(--x-line)">
+              <span style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--x-grafite)">Operação</span>
+              <span></span>
+              <span style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--x-grafite);text-align:right">% PL</span>
+              <span style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--x-grafite);text-align:right">LTV</span>
+            </div>
+            <sc-for list="{{ col.rows }}" as="o" hint-placeholder-count="9">
+              <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.4fr) minmax(0,.55fr) minmax(0,.5fr);gap:8px;align-items:center;padding:9px 4px;border-bottom:1px solid #f0f2f4;border-radius:6px" style-hover="background:var(--x-tint)">
+                <span style="font-size:13px;color:var(--x-navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ o.name }}</span>
+                <span style="display:block;height:10px;border-radius:999px;background:#eef0f2;overflow:hidden">
+                  <i style="display:block;height:10px;width:{{ o.barW }};background:var(--x-aqua);border-radius:999px"></i>
+                </span>
+                <span style="font-family:var(--font-heading);font-size:12.5px;font-weight:700;text-align:right">{{ o.pct }}</span>
+                <span style="font-size:12px;text-align:right;color:var(--x-grafite)">{{ o.ltv }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:clamp(14px,2vw,24px);margin-top:clamp(22px,3vw,30px);padding-top:clamp(18px,2vw,24px);border-top:1px solid var(--x-line)">
+        <sc-for list="{{ concStats }}" as="s" hint-placeholder-count="4">
+          <div>
+            <div style="font-family:var(--font-heading);font-size:clamp(21px,2.4vw,28px);font-weight:700;color:var(--x-aqua-d);line-height:1">{{ s.big }}</div>
+            <div style="font-size:13px;color:var(--x-grafite);margin-top:8px;line-height:1.45">{{ s.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="font-size:12px;line-height:1.55;color:var(--x-grafite);margin-top:18px">Concentração por ativo em relação ao patrimônio líquido do Fundo em 31/07/2026. LTV apurado a valor de mercado das garantias, a partir dos laudos de avaliação e dos relatórios de acompanhamento de obra. As exposições São Carlos e EBM são apoiadas em risco corporativo com rating e não têm LTV apurado. Fonte: Éxes Gestora de Recursos.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(18px,2.5vw,26px);margin-top:clamp(22px,3vw,34px)">
+      <sc-for list="{{ cartBullets }}" as="b" hint-placeholder-count="3">
+        <div style="background:var(--x-tint);border-radius:14px;padding:clamp(20px,2.4vw,26px)">
+          <div style="font-family:var(--font-heading);font-size:clamp(20px,2.2vw,26px);font-weight:700;line-height:1.15">{{ b.big }}</div>
+          <p style="font-size:15px;line-height:1.55;color:var(--x-grafite);margin-top:10px">{{ b.label }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(20px,3vw,30px);margin-top:clamp(22px,3vw,34px);align-items:stretch">
+      <div style="background:#fff;border:1px solid var(--x-line);border-radius:16px;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column">
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">Alocação sobre o patrimônio líquido</h3>
+        <p style="font-size:13px;color:var(--x-grafite);margin-bottom:22px">Posição de 31/07/2026.</p>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(20px,3vw,32px);align-items:center">
+          <svg viewBox="0 0 120 120" style="width:min(300px,70%);height:auto;flex:0 0 auto" role="img" aria-label="Alocação sobre o patrimônio líquido">
+            <sc-for list="{{ aloc }}" as="a" hint-placeholder-count="3">
+              <circle cx="60" cy="60" r="46" fill="none" stroke="{{ a.color }}" stroke-width="16" stroke-dasharray="{{ a.dash }}" stroke-dashoffset="{{ a.offset }}" transform="rotate(-90 60 60)"></circle>
+            </sc-for>
+            <text x="60" y="57" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="700" font-size="17" fill="#14273c">R$ 136,5</text>
+            <text x="60" y="72" text-anchor="middle" font-family="Lato, sans-serif" font-size="9" fill="#595959">MILHÕES DE PL</text>
+          </svg>
+          <div style="display:flex;flex-direction:column;gap:12px;width:100%">
+            <sc-for list="{{ aloc }}" as="a" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px;align-items:center;border-top:1px solid #f0f2f4;padding-top:12px">
+                <i style="width:10px;height:10px;border-radius:999px;background:{{ a.color }};display:block;flex:0 0 auto"></i>
+                <span style="font-size:14.5px;flex:1;min-width:0">{{ a.label }}</span>
+                <span style="font-family:var(--font-heading);font-size:16px;font-weight:700">{{ a.pct }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--x-line);border-radius:16px;padding:clamp(20px,2.4vw,30px)">
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">Diversificação setorial</h3>
+        <p style="font-size:13px;color:var(--x-grafite);margin-bottom:22px">Setores da carteira de crédito imobiliário, em % do patrimônio líquido.</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ setores }}" as="s" hint-placeholder-count="8">
+            <div>
+              <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:5px">
+                <span style="font-size:14px;flex:1;min-width:0">{{ s.name }}</span>
+                <span style="font-family:var(--font-heading);font-size:14px;font-weight:700">{{ s.pct }}</span>
+              </div>
+              <div style="height:8px;border-radius:999px;background:#eef0f2;overflow:hidden">
+                <i style="display:block;height:8px;width:{{ s.barW }};background:{{ s.color }};border-radius:999px"></i>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <p style="font-size:12px;line-height:1.55;color:var(--x-grafite);margin-top:18px">A posição de ativos de crédito imobiliário investida pelo Fundo em 31/07/2026 era de R$ 103,7 milhões. Fonte: Éxes Gestora de Recursos.</p>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:clamp(24px,3.5vw,38px)">
+      <a href="{{ ctaHref }}" style="display:inline-flex;align-items:center;gap:10px;background:var(--x-cta);color:#0d1c2b;padding:16px 30px;border-radius:999px;font-family:var(--font-heading);font-size:15px;font-weight:700;max-width:100%" style-hover="background:var(--x-cta-h)">
+        {{ ctaLabel }}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Empresas com exposição" style="background:#f4f5f6;padding:clamp(44px,6vw,84px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto;background:#fff;border-radius:20px;padding:clamp(26px,3.4vw,48px);box-shadow:var(--x-shadow)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,56px);align-items:center">
+      <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+        <span style="align-self:flex-start;background:var(--x-tint);color:var(--x-aqua-d);font-family:var(--font-heading);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:9px 18px;border-radius:999px">Empresas com exposição na carteira</span>
+        <h2 style="font-size:clamp(26px,3.4vw,40px);font-weight:700;max-width:22ch;text-wrap:balance">Cada operação tem um papel específico na estrutura.</h2>
+        <p style="font-size:16.5px;line-height:1.6;color:var(--x-grafite);max-width:52ch;text-wrap:pretty">Algumas operações da carteira contam com garantias ou coobrigações de empresas conhecidas, cada uma com um papel específico:</p>
+        <p style="font-size:12px;line-height:1.55;color:var(--x-grafite);max-width:70ch;margin-top:4px">Ratings atribuídos por Moody's Local e Fitch às contrapartes indicadas, e não às cotas do Fundo ou à Oferta, que não conta com classificação de risco. Fonte: Éxes Gestora de Recursos — carteira detida, posição de 31/07/2026.</p>
+      </div>
+      <div style="min-width:0;overflow-x:hidden;overflow-y:visible;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)">
+        <div style="display:flex;width:max-content;align-items:center;animation:exesMarquee 26s linear infinite">
+          <sc-for list="{{ contrapartes }}" as="c" hint-placeholder-count="3">
+            <div style="width:210px;height:96px;flex:0 0 auto;margin-right:44px;display:flex;align-items:center;justify-content:center">
+              <img src="{{ c.img }}" alt="{{ c.slotHint }}" loading="lazy" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:grayscale(1) brightness(0) opacity(.72)">
+            </div>
+          </sc-for>
+          <sc-for list="{{ contrapartes }}" as="c" hint-placeholder-count="3">
+            <div style="width:210px;height:96px;flex:0 0 auto;margin-right:44px;display:flex;align-items:center;justify-content:center" aria-hidden="true">
+              <img src="{{ c.img }}" alt="" loading="lazy" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:grayscale(1) brightness(0) opacity(.72)">
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="viabilidade" data-screen-label="Estudo de viabilidade" style="background:var(--x-navy);color:#fff;padding:clamp(52px,7vw,100px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:860px;margin:0 auto clamp(28px,4vw,46px)">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua);text-transform:uppercase">Estudo de viabilidade</span>
+      <h2 style="font-size:clamp(25px,3.4vw,42px);font-weight:700;color:#fff">Projeção do Estudo de Viabilidade<br>para os próximos 5 anos.</h2>
+      <p style="font-size:16.5px;color:rgba(255,255,255,.8);max-width:66ch;margin:0 auto;text-wrap:pretty">A gestora elaborou, no Estudo de Viabilidade, uma projeção de rentabilidade para os próximos 5 anos do EXES11, considerando a carteira atual, sem depender de captação de recursos novos.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(20px,3vw,30px);align-items:stretch">
+      <sc-for list="{{ cenarios }}" as="c" hint-placeholder-count="2">
+        <div style="background:rgba(255,255,255,.045);border:1px solid {{ c.border }};border-radius:16px;padding:clamp(18px,2.4vw,28px);min-width:0;display:flex;flex-direction:column">
+          <h3 style="font-size:clamp(18px,2.2vw,23px);font-weight:700;color:#fff">{{ c.titulo }}</h3>
+          <p style="font-size:14px;color:rgba(255,255,255,.72);margin:8px 0 20px">Yield em percentual do CDI, Ano 1 a Ano 5.</p>
+          <svg viewBox="0 0 560 300" style="width:100%;height:auto;display:block" role="img" aria-label="{{ c.aria }}">
+            <sc-for list="{{ c.ticks }}" as="g" hint-placeholder-count="4">
+              <g>
+                <line x1="46" y1="{{ g.y }}" x2="560" y2="{{ g.y }}" stroke="rgba(255,255,255,.14)"></line>
+                <text x="38" y="{{ g.ty }}" text-anchor="end" fill="rgba(255,255,255,.55)" font-size="12" font-family="Lato, sans-serif">{{ g.label }}</text>
+              </g>
+            </sc-for>
+            <sc-for list="{{ c.bars }}" as="b" hint-placeholder-count="5">
+              <g>
+                <rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" rx="4" fill="{{ b.fill }}" stroke="{{ b.stroke }}" stroke-width="2"></rect>
+                <text x="{{ b.cx }}" y="{{ b.ly }}" text-anchor="middle" fill="{{ b.ink }}" font-size="16" font-family="Montserrat, sans-serif" font-weight="700">{{ b.v }}</text>
+                <text x="{{ b.cx }}" y="288" text-anchor="middle" fill="rgba(255,255,255,.72)" font-size="13" font-family="Montserrat, sans-serif" font-weight="600">{{ b.ano }}</text>
+              </g>
+            </sc-for>
+          </svg>
+          <ul style="margin:22px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ c.pontos }}" as="p" hint-placeholder-count="3">
+              <li style="font-size:15px;line-height:1.6;color:rgba(255,255,255,.86)">{{ p.t }}</li>
+            </sc-for>
+          </ul>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:clamp(12px,2vw,18px);margin-top:auto;padding-top:22px;border-top:1px solid rgba(255,255,255,.14)">
+            <sc-for list="{{ c.stats }}" as="s" hint-placeholder-count="2">
+              <div>
+                <div style="font-family:var(--font-heading);font-size:clamp(19px,2.2vw,25px);font-weight:700;color:var(--x-aqua);line-height:1">{{ s.big }}</div>
+                <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.45">{{ s.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="border:1px solid var(--x-aqua);border-radius:16px;padding:clamp(18px,2.4vw,28px);margin-top:clamp(22px,3vw,32px);background:rgba(75,167,179,.07)">
+      <p style="font-size:15.5px;line-height:1.65;color:#fff;font-weight:700">Importante: isso é uma projeção baseada em simulações, feita pela própria gestora, e não é garantia de rentabilidade futura. Os resultados reais podem ser diferentes.</p>
+      <p style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.7);margin-top:12px">A EXPECTATIVA DE RENTABILIDADE PROJETADA NÃO REPRESENTA E NEM DEVE SER CONSIDERADA, A QUALQUER MOMENTO OU SOB QUALQUER HIPÓTESE, COMO PROMESSA, GARANTIA OU SUGESTÃO DE RENTABILIDADE FUTURA. As estimativas do Estudo de Viabilidade foram elaboradas pela gestora e não foram objeto de auditoria, revisão ou compilação por auditor independente. Fonte: Éxes Gestora de Recursos.</p>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:clamp(24px,3.5vw,38px)">
+      <a href="{{ ctaHref }}" style="display:inline-flex;align-items:center;gap:10px;background:var(--x-cta);color:#0d1c2b;padding:16px 30px;border-radius:999px;font-family:var(--font-heading);font-size:15px;font-weight:700;max-width:100%" style-hover="background:var(--x-cta-h)">
+        {{ ctaLabel }}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Cronograma da oferta" style="background:#f4f5f6;color:var(--x-navy);padding:clamp(44px,6vw,84px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;margin:0 auto clamp(28px,3.5vw,42px)">
+      <span style="background:var(--x-tint);color:var(--x-aqua-d);font-family:var(--font-heading);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:9px 18px;border-radius:999px">Cronograma indicativo</span>
+      <h2 style="font-size:clamp(28px,4.4vw,54px);font-weight:700;color:var(--x-navy)">Cronograma da oferta</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:clamp(12px,1.6vw,20px)">
+      <sc-for list="{{ crono }}" as="c" hint-placeholder-count="6">
+        <div style="{{ c.card }}">
+          <div style="font-family:var(--font-heading);font-size:18px;font-weight:700;color:{{ c.ink }};line-height:1.2">{{ c.date }}</div>
+          <div style="font-size:14px;color:{{ c.sub }};margin-top:10px;line-height:1.45">{{ c.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <p style="font-size:12px;line-height:1.55;color:var(--x-grafite);margin-top:clamp(18px,2.5vw,26px)">Fonte: “Cronograma indicativo” dos documentos da Oferta. As datas são indicativas e sujeitas a alterações, atrasos e antecipações a critério do Coordenador Líder; qualquer modificação será comunicada à CVM e aos investidores. Nos termos do art. 48 da Resolução CVM 160, a aquisição das cotas deve ocorrer em até 180 dias da divulgação do Anúncio de Início. Fonte: documentos da Oferta.</p>
+  </div>
+</section>
+
+<section data-screen-label="A gestora" style="background:#fff;padding:clamp(52px,7vw,100px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(30px,5vw,64px);align-items:center">
+    <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+      <img src="assets/logo-exes.webp" alt="Éxes Gestora de Recursos" style="height:34px;width:auto;align-self:flex-start">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua-d);text-transform:uppercase">A gestora responsável pelo fundo</span>
+      <h2 style="font-size:clamp(26px,3.6vw,42px);font-weight:700;max-width:26ch">Especializada em fundos de crédito privado.</h2>
+      <p style="font-size:16.5px;color:var(--x-grafite);max-width:58ch;text-wrap:pretty">O EXES11 é gerido pela Éxes Gestora de Recursos, especializada em fundos de crédito privado, fundada por profissionais com mais de 20 anos de mercado financeiro e de capitais brasileiro.</p>
+      <p style="font-size:12px;color:var(--x-grafite)">Data-base junho/2026. Fonte: Éxes Gestora de Recursos.</p>
+      <a href="{{ ctaHref }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;background:var(--x-cta);color:#0d1c2b;padding:15px 28px;border-radius:999px;font-family:var(--font-heading);font-size:14px;font-weight:700;max-width:100%;margin-top:6px" style-hover="background:var(--x-cta-h)">
+        {{ ctaLabel }}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </a>
+    </div>
+    <div style="display:grid;gap:clamp(14px,2vw,20px);min-width:0">
+      <sc-for list="{{ gestora }}" as="g" hint-placeholder-count="3">
+        <div style="background:var(--x-tint);border-radius:14px;padding:clamp(20px,2.4vw,28px);display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline">
+          <div style="font-family:var(--font-heading);font-size:clamp(26px,3vw,34px);font-weight:700;color:var(--x-aqua-d);line-height:1">{{ g.big }}</div>
+          <div style="font-size:15px;color:var(--x-grafite);flex:1 1 160px;min-width:0">{{ g.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="riscos" data-screen-label="Fatores de risco" style="background:var(--x-tint);padding:clamp(52px,7vw,100px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:860px;margin:0 auto clamp(26px,3.5vw,40px)">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua-d);text-transform:uppercase">Fatores de risco (resumo obrigatório)</span>
+      <h2 style="font-size:clamp(26px,3.6vw,44px);font-weight:700">O investimento nas cotas representa<br>um investimento de risco.</h2>
+    </div>
+    <div style="background:#fff;border-radius:16px;padding:clamp(22px,2.8vw,36px);box-shadow:var(--x-shadow)">
+      <p style="font-size:16.5px;line-height:1.7;color:var(--x-navy)">Em ordem de relevância conforme o Prospecto: risco de crédito; risco macroeconômico; riscos relativos ao setor imobiliário; risco de execução das garantias atreladas aos CRI; risco de liquidez das cotas (o FII é um condomínio fechado, sem resgate de cotas); entre outros. A lista completa está na seção “Fatores de Risco” do Prospecto.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:clamp(12px,2vw,18px);margin-top:clamp(22px,3vw,30px)">
+        <sc-for list="{{ riscos }}" as="r" hint-placeholder-count="5">
+          <div style="background:#fff;border:1px solid var(--x-line);border-radius:16px;padding:20px;min-width:0;display:flex;flex-direction:column;min-height:180px">
+            <span style="width:44px;height:44px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);margin-bottom:16px;flex:0 0 auto">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ r.icon }}"></path></svg>
+            </span>
+            <div style="font-size:15.5px;font-weight:700;font-family:var(--font-heading);line-height:1.35">{{ r.t }}</div>
+            <div style="font-family:var(--font-heading);font-size:22px;font-weight:700;color:var(--x-aqua);line-height:1;margin-top:auto;padding-top:18px">{{ r.n }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.6;color:var(--x-navy);font-weight:700;margin-top:clamp(22px,3vw,30px);padding-top:clamp(18px,2.5vw,26px);border-top:1px solid var(--x-line)">LEIA O PROSPECTO, A LÂMINA E O REGULAMENTO DO FUNDO ANTES DE ACEITAR A OFERTA, EM ESPECIAL A SEÇÃO “FATORES DE RISCO”.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contato" data-screen-label="Documentos da oferta" style="background:var(--x-navy-d);color:#fff;padding:clamp(36px,5vw,64px) clamp(16px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;gap:clamp(18px,3vw,40px);align-items:center;justify-content:space-between">
+    <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 300px;min-width:0">
+      <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua);text-transform:uppercase">Documentos da oferta</span>
+      <h2 style="font-size:clamp(20px,2.4vw,28px);font-weight:700;color:#fff">Leia antes de investir</h2>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px">
+      <a href="https://exes.com.br/relatorios/exes-exes11-oferta/exes11-prospecto.pdf" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:12px;background:var(--x-cta);color:#0d1c2b;padding:15px 26px;border-radius:999px;font-family:var(--font-heading);font-size:14px;font-weight:700;white-space:nowrap" style-hover="background:var(--x-cta-h)">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+        Prospecto da oferta
+      </a>
+      <a href="https://exes.com.br/relatorios/exes-exes11-oferta/exes11-material-publicitario.pdf" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:12px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.42);padding:15px 26px;border-radius:999px;font-family:var(--font-heading);font-size:14px;font-weight:700;white-space:nowrap" style-hover="background:rgba(255,255,255,.1)">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto" aria-hidden="true"><path d="M4 4h16v14H4zM8 9h8M8 13h5"></path></svg>
+        Material publicitário
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Rodapé" style="background:#08151f;color:rgba(255,255,255,.7);padding:clamp(44px,6vw,72px) clamp(16px,4vw,48px) clamp(28px,4vw,44px)">
+  <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(26px,3.5vw,40px)">
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:80ch">
+      <img src="assets/logo-exes-branco.webp" alt="Éxes" style="height:24px;width:auto;align-self:flex-start">
+      <p style="font-size:14px;line-height:1.65">Os Investidores poderão encontrar o Prospecto Definitivo, os anúncios e comunicados da Oferta e quaisquer outras informações referentes à Oferta nas páginas da rede mundial de computadores da Administradora, da Gestora, do Coordenador Líder e da CVM, indicados abaixo:</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(20px,3vw,32px)">
+      <sc-for list="{{ links }}" as="l" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid rgba(255,255,255,.16);padding-top:16px;min-width:0">
+          <div style="font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--x-aqua)">{{ l.role }}</div>
+          <div style="font-size:14px;color:#fff;line-height:1.45">{{ l.name }}</div>
+          <a href="{{ l.href }}" target="_blank" rel="noopener" style="font-size:13px;color:rgba(255,255,255,.7);word-break:break-word" style-hover="color:#fff">{{ l.url }}</a>
+        </div>
+      </sc-for>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.16);padding-top:clamp(20px,3vw,28px);display:flex;flex-wrap:wrap;gap:clamp(16px,2.5vw,30px);align-items:center">
+      <span role="img" aria-label="Autorregulação ANBIMA — Gestão de Recursos" style="width:50px;height:38px;display:block;background:url(assets/reg-anbima-gestao.webp) center/contain no-repeat;opacity:.42;filter:grayscale(1) brightness(1.6) contrast(.85)" style-hover="opacity:.85;filter:none"></span>
+      <span role="img" aria-label="Autorregulação ANBIMA — Ofertas Públicas" style="width:50px;height:38px;display:block;background:url(assets/reg-anbima-ofertas.webp) center/contain no-repeat;opacity:.42;filter:grayscale(1) brightness(1.6) contrast(.85)" style-hover="opacity:.85;filter:none"></span>
+      <span role="img" aria-label="Autorregulação ANBIMA — Coordenadores de Ofertas Públicas" style="width:50px;height:38px;display:block;background:url(assets/reg-anbima-coordenadores.webp) center/contain no-repeat;opacity:.42;filter:grayscale(1) brightness(1.6) contrast(.85)" style-hover="opacity:.85;filter:none"></span>
+      <span role="img" aria-label="Autorregulação ANBIMA — Securitizadoras" style="width:50px;height:38px;display:block;background:url(assets/reg-anbima-securitizadoras.webp) center/contain no-repeat;opacity:.42;filter:grayscale(1) brightness(1.6) contrast(.85)" style-hover="opacity:.85;filter:none"></span>
+      <span role="img" aria-label="Comissão de Valores Mobiliários" style="width:52px;height:38px;display:block;background:url(assets/reg-cvm.webp) center/contain no-repeat;opacity:.42;filter:grayscale(1) brightness(1.6) contrast(.85)" style-hover="opacity:.85;filter:none"></span>
+      <span role="img" aria-label="Great Place to Work — Certificada" style="width:28px;height:38px;display:block;background:url(assets/reg-gptw.webp) center/contain no-repeat;opacity:.42;filter:grayscale(1) brightness(1.6) contrast(.85)" style-hover="opacity:.85;filter:none"></span>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.16);padding-top:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:14px">
+      <p style="font-size:13px;line-height:1.7;color:#fff">A expectativa de rentabilidade não representa promessa nem garantia de rentabilidade. O Fundo não conta com garantia da gestora, do administrador, do coordenador líder da Oferta, de qualquer mecanismo de seguro ou do Fundo Garantidor de Créditos — FGC. Recomenda-se a leitura do Regulamento e do Prospecto, com atenção à seção de Fatores de Risco, antes de investir.</p>
+      <p style="font-size:12px;line-height:1.65">ESTE DOCUMENTO É UM MATERIAL PUBLICITÁRIO E CONTÉM APENAS UM RESUMO DAS INFORMAÇÕES CONSTANTES DOS DOCUMENTOS DA OFERTA, COM OS QUAIS NÃO SE CONFUNDE. Material publicitário preparado pela Éxes Gestora de Recursos Ltda. na qualidade de gestora do Éxes Crédito Direto II Fundo de Investimento Financeiro Multimercado, ofertante, no âmbito da 1ª oferta pública de distribuição secundária de cotas da classe única do Éxes Fundo de Investimento Imobiliário Responsabilidade Limitada — EXES11, nos termos da Resolução CVM 160, sob rito de registro automático. A rentabilidade passada não representa garantia de rentabilidade futura. As informações aqui contidas não constituem recomendação de investimento, oferta ou solicitação de compra ou venda de valores mobiliários. A decisão de investimento é de exclusiva responsabilidade do investidor.</p>
+      <p style="font-size:12px;line-height:1.65;color:rgba(255,255,255,.45)">© 2026 Éxes Gestora de Recursos Ltda. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ctaHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#contato&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chamada para ação&quot;},&quot;ctaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Clique aqui para [X — destino a definir]&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chamada para ação&quot;},&quot;ctaShort&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Quero investir&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chamada para ação&quot;}}">
+class Component extends DCLogic {
+  state = { hov: 24, narrow: typeof window !== 'undefined' ? window.innerWidth <= 720 : false, avisoH: 48, navH: 68 };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const n = window.innerWidth <= 720;
+      const bar = document.getElementById('avisoBar');
+      const nav = document.getElementById('navBar');
+      const h = bar ? Math.round(bar.getBoundingClientRect().height) : this.state.avisoH;
+      const nh = nav ? Math.round(nav.getBoundingClientRect().height) : this.state.navH;
+      if (n !== this.state.narrow || h !== this.state.avisoH || nh !== this.state.navH) this.setState({ narrow: n, avisoH: h, navH: nh });
+    };
+    this._t = setTimeout(this._onResize, 120);
+    window.addEventListener('resize', this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { clearTimeout(this._t); window.removeEventListener('resize', this._onResize); }
+
+  iso = [1.30,1.20,1.10,1.21,1.22,1.15,1.33,1.34,1.34,1.33,1.34,1.34,1.35,1.35,1.34,1.33,1.33,1.32,1.31,1.30,1.31,1.31,1.33,1.34,1.34];
+  bru = [1.53,1.41,1.29,1.42,1.43,1.35,1.57,1.57,1.58,1.57,1.57,1.58,1.58,1.58,1.58,1.56,1.57,1.55,1.55,1.53,1.54,1.54,1.56,1.57,1.58];
+  dis = [0.12,0.11,0.10,0.11,0.11,0.11,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13,0.13];
+
+  months() {
+    const m = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+    const out = []; let y = 24, i = 6;
+    for (let k = 0; k < 25; k++) { out.push(m[i] + '/' + y); i++; if (i === 12) { i = 0; y++; } }
+    return out;
+  }
+
+  pt(n, d) { return n.toFixed(d).replace('.', ','); }
+
+  termosAll() {
+    return [
+      { n: '01', t: 'Tipo de oferta', hi: 'CVM 160', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 15h6M9 11h3', v: '1ª Oferta Pública de Distribuição Secundária de Cotas, sob o rito automático da Resolução CVM 160' },
+      { n: '02', t: 'Registro na CVM', hi: '02/09/2026', icon: 'M12 3l2.4 1.8 3 .2.6 2.9 2 2.1-1.4 2.6.4 3-2.8 1.1-1.7 2.5-2.9-.7-2.9.7-1.7-2.5-2.8-1.1.4-3L3.9 10l2-2.1.6-2.9 3-.2z', v: 'Registro CVM/SRE/AUT/FII/SEC/2026/005, de 02/09/2026' },
+      { n: '03', t: 'Preço por cota', hi: 'R$ 9,50', icon: 'M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', v: 'Preço por cota: R$ 9,50' },
+      { n: '04', t: 'Montante inicial', hi: 'R$ 56M', icon: 'M3 7h18v12H3zM3 7l3-4h12l3 4M8 12h8', v: 'Montante inicial da oferta: R$ 56.000.011,00' },
+      { n: '05', t: 'Lote adicional', hi: 'Até 25%', icon: 'M12 5v14M5 12h14', v: 'Lote adicional de até 25%' },
+      { n: '06', t: 'Investimento mínimo', hi: '1 cota', icon: 'M12 3v18M8 7h8M8 12h8M8 17h8', v: 'Investimento mínimo: 1 cota' },
+      { n: '07', t: 'Distribuição parcial', hi: 'Admitida', icon: 'M3 12h7l2-5 2 10 2-5h5', v: 'Distribuição parcial admitida, observado o montante mínimo' },
+      { n: '08', t: 'Custos da oferta', hi: '100%', icon: 'M4 4h16v14H4zM8 9h8M8 13h5', v: 'Custos da oferta 100% suportados pelo Ofertante' },
+      { n: '09', t: 'Diluição', hi: 'Zero', icon: 'M12 3a9 9 0 1 0 9 9 9 9 0 0 0-9-9zM5.6 5.6l12.8 12.8', v: 'Sem emissão de novas cotas' },
+      { n: '10', t: 'Público alvo', hi: 'Geral', icon: 'M16 20v-2a4 4 0 0 0-8 0v2M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', v: 'Investidores em geral' }
+    ];
+  }
+
+  cenario(titulo, vals, principal, pontos, stats) {
+    const lo = 108, hi = 142, H = 258, top = 44;
+    const y = v => top + (hi - v) / (hi - lo) * (H - top);
+    const slot = (560 - 56) / 5, bw = slot * 0.46;
+    return {
+      titulo,
+      border: principal ? 'var(--x-aqua)' : 'rgba(255,255,255,.16)',
+      aria: 'Yield em percentual do CDI, ' + titulo.toLowerCase() + ', Ano 1 a Ano 5',
+      ticks: [110, 120, 130, 140].map(v => ({ y: y(v).toFixed(1), ty: (y(v) + 4).toFixed(1), label: v + '%' })),
+      bars: vals.map((v, i) => {
+        const cx = 56 + slot * i + slot / 2;
+        const yy = y(v);
+        return {
+          ano: 'Ano ' + (i + 1), cx: cx.toFixed(1),
+          x: (cx - bw / 2).toFixed(1), y: yy.toFixed(1), h: (H - yy).toFixed(1), w: bw.toFixed(1),
+          fill: principal ? '#4ba7b3' : 'transparent',
+          stroke: principal ? '#4ba7b3' : '#aeafb2',
+          ink: principal ? '#4ba7b3' : '#aeafb2',
+          ly: (yy - 12).toFixed(1), v: this.pt(v, 1) + '%'
+        };
+      }),
+      pontos: pontos.map(t => ({ t })),
+      stats
+    };
+  }
+
+  renderVals() {
+    const M = this.months();
+    const H = 252, x0 = 60, x1 = 985, lo = 0.9, hi = 1.7;
+    const px = i => x0 + (x1 - x0) * i / 24;
+    const py = v => H - (v - lo) / (hi - lo) * (H - 24);
+    const path = a => a.map((v, i) => (i ? 'L' : 'M') + px(i).toFixed(1) + ' ' + py(v).toFixed(1)).join(' ');
+    const area = a => path(a) + ' L' + px(24).toFixed(1) + ' ' + H + ' L' + px(0).toFixed(1) + ' ' + H + ' Z';
+    const h = this.state.hov;
+    const colW = (x1 - x0) / 24;
+
+    const concRaw = [
+      ['Persa — Spot', 7.15, '61,2%'], ['Maxi — Tramonto', 6.85, '60,8%'], ['Acoi — Ilhas Gregas', 6.20, '61,8%'],
+      ['Mont Blanc', 5.73, '56,7%'], ['Duarte e Lima', 5.71, '37,3%'], ['NMC — Primus Park', 5.67, '40,5%'],
+      ['São Vicente', 5.26, '52,5%'], ['São Carlos', 5.23, '—'], ['FGR', 5.23, '37,3%'],
+      ['Celeste', 4.80, '43,4%'], ['EBM (Cyrela)', 4.73, '—'], ['Persa Piatra', 4.71, '64,8%'],
+      ['Raposo (Volpe)', 4.42, '57,8%'], ['IC Construtora', 2.24, '55,1%'], ['Ávida', 1.01, '6,3%'],
+      ['Totus — Diadema', 0.97, '58,7%'], ['Congesa', 0.10, '7,9%']
+    ].map(([name, pct, ltv]) => ({ name, pct: this.pt(pct, 2) + '%', ltv, barW: (pct / 7.15 * 100).toFixed(1) + '%' }));
+
+    const C = 2 * Math.PI * 46;
+    let acc = 0;
+    const aloc = [['Crédito imobiliário', 75.9, '#4ba7b3'], ['FIAGRO (AGRX11)', 21.2, '#374d62'], ['Caixa', 2.9, '#aeafb2']].map(([label, v, color]) => {
+      const len = C * v / 100;
+      const item = { label, pct: this.pt(v, 1) + '%', color, dash: len.toFixed(2) + ' ' + (C - len).toFixed(2), offset: (-acc).toFixed(2) };
+      acc += len; return item;
+    });
+
+    return {
+      ctaHref: this.props.ctaHref ?? '#contato',
+      ctaLabel: this.props.ctaLabel ?? 'Clique aqui para [X — destino a definir]',
+      ctaShort: this.props.ctaShort ?? 'Quero investir',
+
+      headerStyle: 'position:relative;z-index:10;background:rgba(13,28,43,.96);border-bottom:1px solid rgba(255,255,255,.1)',
+      barSpacer: 'height:' + this.state.avisoH + 'px',
+
+
+      termosRows: (() => {
+        const all = this.termosAll();
+        const a = all.slice(0, 5), b = all.slice(5);
+        return [
+          { track: 'display:flex;width:max-content;animation:exesMarquee 40s linear infinite', items: a.concat(a) },
+          { track: 'display:flex;width:max-content;animation:exesMarqueeRev 46s linear infinite', items: b.concat(b) }
+        ];
+      })(),
+
+      destGridStyle: this.state.narrow
+        ? 'display:none'
+        : 'max-width:1240px;margin:-64px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(18px,2.5vw,26px);position:relative;z-index:5',
+      destCarStyle: this.state.narrow
+        ? 'max-width:1240px;margin:-64px auto 0;position:relative;z-index:5;overflow-x:hidden;overflow-y:visible;padding:14px 0;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)'
+        : 'display:none',
+
+
+      heroStats: [
+        { big: 'R$ 9,50', label: 'Preço por cota' },
+        { big: '1,82%', label: 'Deságio sobre a cota patrimonial' },
+        { big: 'R$ 56M', label: 'Montante inicial da oferta' },
+        { big: '15,92%', label: 'DY patrimonial em 12 meses (jun/26)' }
+      ],
+
+      destaques: [
+        { icon: 'M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', t: 'Isenção de Imposto de Renda nos rendimentos mensais para pessoa física' },
+        { icon: 'M3 3v18h18M19 9l-5 5-4-4-3 3', t: '15,92% de Dividend Yield patrimonial nos últimos 12 meses (data-base: jun/2026)' },
+        { icon: 'M6 3h12v6a6 6 0 0 1-12 0zM12 15v4M8 21h8', t: '2º lugar entre 87 FIIs de recebíveis em rendimento patrimonial, 13 meses seguidos no Top 10' }
+      ],
+
+      termos: this.termosAll(),
+      termosUnused: [
+        { n: '01', t: 'Tipo de oferta', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 15h6M9 11h3', v: '1ª Oferta Pública de Distribuição Secundária de Cotas, sob o rito automático da Resolução CVM 160' },
+        { n: '02', t: 'Registro na CVM', icon: 'M12 3l2.4 1.8 3 .2.6 2.9 2 2.1-1.4 2.6.4 3-2.8 1.1-1.7 2.5-2.9-.7-2.9.7-1.7-2.5-2.8-1.1.4-3L3.9 10l2-2.1.6-2.9 3-.2z', v: 'Registro CVM/SRE/AUT/FII/SEC/2026/005, de 02/09/2026' },
+        { n: '03', t: 'Preço por cota', icon: 'M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', v: 'Preço por cota: R$ 9,50' },
+        { n: '04', t: 'Montante inicial', icon: 'M3 7h18v12H3zM3 7l3-4h12l3 4M8 12h8', v: 'Montante inicial da oferta: R$ 56.000.011,00' },
+        { n: '05', t: 'Lote adicional', icon: 'M12 5v14M5 12h14', v: 'Lote adicional de até 25%' },
+        { n: '06', t: 'Investimento mínimo', icon: 'M12 3v18M8 7h8M8 12h8M8 17h8', v: 'Investimento mínimo: 1 cota' },
+        { n: '07', t: 'Distribuição parcial', icon: 'M3 12h7l2-5 2 10 2-5h5', v: 'Distribuição parcial admitida, observado o montante mínimo' },
+        { n: '08', t: 'Custos da oferta', icon: 'M4 4h16v14H4zM8 9h8M8 13h5', v: 'Custos da oferta 100% suportados pelo Ofertante' },
+        { n: '09', t: 'Diluição', icon: 'M12 3a9 9 0 1 0 9 9 9 9 0 0 0-9-9zM5.6 5.6l12.8 12.8', v: 'Sem emissão de novas cotas' }
+      ],
+
+      pilares: [
+        { big: '72%', body: 'da carteira de crédito estruturada pela própria Éxes' },
+        { big: '52%', body: 'de LTV médio ponderado das operações com garantia real, conforme o estudo de viabilidade' },
+        { big: '19 meses', body: 'consecutivos de distribuição no mesmo patamar (R$ 0,13 por cota)' },
+        { big: '5 anos', body: 'prestes a completar 5 anos de negociação na bolsa' }
+      ],
+
+      rendLineA: path(this.iso), rendLineB: path(this.bru),
+      rendAreaA: area(this.iso), rendAreaB: area(this.bru),
+      rendTicks: [1.0, 1.2, 1.4, 1.6].map(v => ({ y: py(v).toFixed(1), ty: (py(v) + 4).toFixed(1), label: this.pt(v, 1) + '%' })),
+      rendCols: M.map((mm, i) => ({
+        x: (px(i) - colW / 2).toFixed(1), w: colW.toFixed(1), cx: px(i).toFixed(1),
+        tick: (i % 4 === 0 || i === 24) ? mm : '',
+        on: () => this.setState({ hov: i })
+      })),
+      rd: {
+        mes: M[h], iso: this.pt(this.iso[h], 2) + '%', bruto: this.pt(this.bru[h], 2) + '%',
+        dist: 'R$ ' + this.pt(this.dis[h], 2),
+        x: px(h).toFixed(1), yA: py(this.iso[h]).toFixed(1), yB: py(this.bru[h]).toFixed(1)
+      },
+
+      acum: [
+        { name: 'EXES11', value: '+61,6%', barW: '100%', ink: '#4ba7b3', note: 'Retorno total acumulado, base 100 em jun/22' },
+        { name: 'IFIX', value: '+33,0%', barW: '53.6%', ink: '#aeafb2', note: 'Índice de fundos imobiliários da B3, mesmo período' },
+        { name: 'IPCA', value: '+18,6%', barW: '30.2%', ink: '#8fa0b3', note: 'Inflação acumulada no mesmo período' }
+      ],
+
+      concCols: [{ rows: concRaw.slice(0, 9) }, { rows: concRaw.slice(9) }],
+      concStats: [
+        { big: '10%', label: 'Teto de concentração por operação' },
+        { big: '7,15%', label: 'Maior exposição de crédito' },
+        { big: '57,83%', label: 'Dez maiores exposições de crédito imobiliário' },
+        { big: '0', label: 'Operações com LTV acima de 70%' }
+      ],
+      cartBullets: [
+        { big: '19 operações · R$ 136,5 mi', label: 'Operações na carteira e patrimônio líquido (data-base 31/07/2026)' },
+        { big: '7,15%', label: 'Maior exposição de crédito: 7,15% do patrimônio' },
+        { big: 'Multissetorial', label: 'Diversificação setorial: incorporação residencial, educacional, varejo essencial, lajes comerciais, energia, entre outros' }
+      ],
+      setores: [
+        ['Incorporação residencial', 43.9], ['Educacional', 5.7], ['Varejo essencial', 5.3],
+        ['Lajes comerciais', 5.2], ['Residencial pulverizado', 5.2], ['Energia', 4.8],
+        ['Venda de terreno', 4.8], ['Loteamento', 1.0]
+      ].map(([name, pct]) => ({ name, pct: this.pt(pct, 1) + '%', barW: (pct / 43.9 * 100).toFixed(1) + '%', color: pct > 20 ? '#4ba7b3' : '#374d62' })),
+      aloc,
+
+      contrapartes: [
+        { slot: 'logoCyrela', img: 'assets/logo-cyrela.webp', slotDup: 'logoCyrela2', slotHint: 'Logo Cyrela', name: 'Cyrela', role: 'Avalista da operação EBM (rating AAA.br, Moody\u2019s Local)' },
+        { slot: 'logoSaoCarlos', img: 'assets/logo-sao-carlos.webp', slotDup: 'logoSaoCarlos2', slotHint: 'Logo São Carlos', name: 'São Carlos', role: 'Contraparte da operação de mesmo nome, com rating corporativo A+.br (Moody\u2019s Local)' },
+        { slot: 'logoAnima', img: 'assets/logo-anima.webp', slotDup: 'logoAnima2', slotHint: 'Logo Ânima', name: 'Ânima', role: 'Locatária do imóvel que lastreia a operação Duarte e Lima (rating AA(bra), Fitch)' },
+        { slot: 'logoFGR', img: 'assets/logo-fgr.webp', slotDup: 'logoFGR2', slotHint: 'Logo FGR', name: 'FGR', role: 'Contraparte da operação de recebíveis residenciais pulverizados; companhia aberta desde maio/2026' }
+      ],
+
+      cenarios: [
+        this.cenario('Cenário base', [119.1, 126.5, 133.3, 135.8, 136.1], true, [
+          'TIR projetada de cinco anos: 14,74% ao ano (equivalente a CDI + 3,40%), considerando saída das cotas ao valor patrimonial projetado para o 5º ano',
+          'No primeiro ano, dividend yield de 15,81%, ou 18,60% se comparado a uma aplicação tributada'
+        ], [
+          { big: '14,74% a.a.', label: 'TIR projetada de cinco anos' },
+          { big: 'CDI + 3,40%', label: 'Equivalente em spread' }
+        ]),
+        this.cenario('Cenário conservador', [116.3, 123.5, 133.3, 135.7, 136.0], false, [
+          'Considerando inadimplência de 3,22% da carteira e execução de garantias',
+          'Premissas: inadimplência de 3,22% da carteira de crédito; perda de 2,00% (derivada do LTV de cada operação); recuperação de 98% da exposição via execução das garantias em 24 meses; desconto de 30% na venda das garantias',
+          'Retorno total projetado de 14,55% ao ano (equivalente a CDI + 3,23%)',
+          'Mesmo com perdas simuladas, a distribuição no primeiro ano cai R$ 0,01 por cota'
+        ], [
+          { big: '14,55% a.a.', label: 'Retorno total projetado' },
+          { big: 'CDI + 3,23%', label: 'Equivalente em spread' }
+        ])
+      ],
+
+      crono: [
+        { date: '27/08/2026', label: 'Aviso ao Mercado', hi: false },
+        { date: '02/09/2026', label: 'Registro automático na CVM', hi: false },
+        { date: '04/09/2026', label: 'Início do Período de Aquisição', hi: true },
+        { date: '16/09/2026', label: 'Encerramento do Período de Aquisição', hi: true },
+        { date: '17/09/2026', label: 'Procedimento de Alocação', hi: false },
+        { date: '23/09/2026', label: 'Data de Liquidação', hi: false }
+      ].map(c => ({
+        date: c.date, label: c.label,
+        card: 'border-radius:14px;padding:clamp(18px,2vw,24px);min-width:0;' + (c.hi ? 'background:var(--x-aqua)' : 'background:#fff'),
+        ink: c.hi ? '#ffffff' : 'var(--x-navy)',
+        sub: c.hi ? 'rgba(255,255,255,.92)' : 'var(--x-grafite)'
+      })),
+
+      gestora: [
+        { big: '23', label: 'fundos de investimento sob gestão' },
+        { big: '+ R$ 2 bi', label: 'em ativos sob gestão (AuM)' },
+        { big: '+ 20 anos', label: 'de experiência individual da equipe fundadora' }
+      ],
+
+      riscos: [
+        { n: '01', t: 'Risco de crédito', icon: 'M3 7h18v12H3zM3 12h18M7 16h3' },
+        { n: '02', t: 'Risco macroeconômico', icon: 'M3 3v18h18M7 15l4-4 3 3 4-6' },
+        { n: '03', t: 'Riscos relativos ao setor imobiliário', icon: 'M3 10l9-7 9 7v11H3zM9 21v-7h6v7' },
+        { n: '04', t: 'Risco de execução das garantias atreladas aos CRI', icon: 'M12 3l8 3v6c0 4.5-3.2 7.9-8 9-4.8-1.1-8-4.5-8-9V6z' },
+        { n: '05', t: 'Risco de liquidez das cotas', icon: 'M12 3c3 4 6 6.8 6 10a6 6 0 0 1-12 0c0-3.2 3-6 6-10z' }
+      ],
+
+      links: [
+        { role: 'Coordenador Líder e Administrador', name: 'BTG Pactual Serviços Financeiros S.A. DTVM', href: 'https://www.btgpactual.com', url: 'www.btgpactual.com' },
+        { role: 'Gestor', name: 'Éxes Gestora de Recursos Ltda.', href: 'https://www.exes.com.br', url: 'www.exes.com.br' },
+        { role: 'Assessor Legal', name: 'PMK Advogados', href: 'https://www.pmka.com.br', url: 'PMK Advogados' },
+        { role: 'CVM', name: 'Comissão de Valores Mobiliários', href: 'https://www.gov.br/cvm/pt-br', url: 'www.gov.br/cvm/pt-br' }
+      ]
+    };
+  }
+}
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var lenis = new Lenis({
+    duration: 1.1,
+    easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true
+  });
+  window.lenis = lenis;
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href');
+    if (id.length < 2) return;
+    var el = document.querySelector(id);
+    if (!el) return;
+    e.preventDefault();
+    var bar = document.getElementById('avisoBar');
+    lenis.scrollTo(el, { offset: -((bar && bar.offsetHeight) || 0) - 12 });
+  });
+})();
+</script>
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function init() {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+
+    function anim(el, staggered) {
+      if (!el || el.hasAttribute('data-anim') || el.hasAttribute('data-anim-child')) return;
+      el.setAttribute(staggered ? 'data-anim-child' : 'data-anim', '');
+      io.observe(el);
+    }
+
+    // Hero — bloco de conteúdo
+    anim(document.querySelector('#topo [style*="max-width:900px"]'), true);
+
+    // Cada seção / rodapé — encadeia título, conteúdo e nota
+    document.querySelectorAll('section:not(#topo) > div, footer > div').forEach(function (d) {
+      anim(d, true);
+    });
+
+    // Grades de cartões — cada cartão entra em sequência
+    document.querySelectorAll(
+      'section > div [style*="grid-template-columns:repeat(auto-fit"], ' +
+      'section > div > div[style*="display:flex"][style*="flex-direction:column"]'
+    ).forEach(function (g) {
+      if (g.children.length > 1) anim(g, true);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { setTimeout(init, 60); });
+  } else {
+    setTimeout(init, 60);
+  }
+})();
+</script>
+<script>
+/* Carrosséis: clicar/tocar em um card congela o carrossel; toca de novo para retomar */
+(function () {
+  function track(el) {
+    return el && el.closest('[style*="animation:exesMarquee"], [style*="animation:exesMarqueeRev"]');
+  }
+  document.addEventListener('click', function (e) {
+    var t = track(e.target);
+    if (t) t.classList.toggle('marq-paused');
+  });
+  document.addEventListener('touchstart', function (e) {
+    var t = track(e.target);
+    if (t) t.classList.add('marq-paused');
+  }, { passive: true });
+})();
+</script>
+<script>
+/* Navbar tablet/mobile: injeta o botão de menu e controla o painel */
+(function () {
+  function build() {
+    var bar = document.getElementById('navBar');
+    if (!bar) return;
+    var row = bar.querySelector('div');
+    if (!row || row.querySelector('#navMenuBtn')) return;
+    var nav = row.querySelector('nav');
+
+    var btn = document.createElement('button');
+    btn.id = 'navMenuBtn';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Abrir menu');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span></span><span></span><span></span>';
+    btn.addEventListener('click', function () {
+      var open = bar.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    });
+    row.appendChild(btn);
+
+    var cta = row.querySelector('a[href][style*="var(--x-cta)"]');
+    if (cta && nav && !nav.querySelector('.nav-cta')) {
+      var c = cta.cloneNode(true);
+      c.className = 'nav-cta';
+      nav.appendChild(c);
+    }
+    if (nav) {
+      nav.addEventListener('click', function (e) {
+        if (e.target.closest('a')) {
+          bar.classList.remove('nav-open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.setAttribute('aria-label', 'Abrir menu');
+        }
+      });
+    }
+    document.addEventListener('click', function (e) {
+      if (bar.classList.contains('nav-open') && !bar.contains(e.target)) {
+        bar.classList.remove('nav-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+  var tries = [80, 400, 1200, 2500];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { tries.forEach(function (t) { setTimeout(build, t); }); });
+  } else {
+    tries.forEach(function (t) { setTimeout(build, t); });
+  }
+})();
+</script>
+</body>
+</html>
