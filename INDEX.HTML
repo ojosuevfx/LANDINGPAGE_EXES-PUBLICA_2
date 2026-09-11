@@ -153,7 +153,9 @@ section[id],header[id]{scroll-margin-top:96px}
 
 /* ---- Cartões (ícone + título + texto) mais compactos em tablet/mobile ---- */
 @media (max-width:900px){
-  /* Destaques (grade e carrossel) */
+  /* Destaques (grade) */
+  [data-screen-label="Destaques"] [style*="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"]{
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr))!important;gap:10px!important}
   [data-screen-label="Destaques"] [style*="box-shadow:var(--x-shadow)"][style*="flex-direction:column"]{
     padding:14px 16px!important;gap:8px!important}
   [data-screen-label="Destaques"] [style*="box-shadow:var(--x-shadow)"][style*="flex-direction:column"] > span{
@@ -161,14 +163,6 @@ section[id],header[id]{scroll-margin-top:96px}
   [data-screen-label="Destaques"] [style*="box-shadow:var(--x-shadow)"][style*="flex-direction:column"] > span svg{
     width:17px!important;height:17px!important}
   [data-screen-label="Destaques"] h3{font-size:14.5px!important;line-height:1.35!important}
-
-  /* Termos da oferta */
-  #termos [style*="min-height:250px"]{padding:14px 16px!important;min-height:0!important}
-  #termos [style*="min-height:250px"] > span{width:36px!important;height:36px!important;margin-bottom:8px!important}
-  #termos [style*="min-height:250px"] > span svg{width:16px!important;height:16px!important}
-  #termos [style*="min-height:250px"] h3{font-size:14.5px!important;margin-bottom:4px!important}
-  #termos [style*="min-height:250px"] p{font-size:13px!important;line-height:1.45!important}
-  #termos [style*="min-height:250px"] > div:last-child{padding-top:10px!important}
 
   /* Fatores de risco */
   #riscos [style*="min-height:180px"]{padding:14px!important;min-height:0!important}
@@ -297,26 +291,6 @@ section[id],header[id]{scroll-margin-top:96px}
       </div>
     </sc-for>
   </div>
-  <div style="{{ destCarStyle }}">
-    <div style="display:flex;width:max-content;animation:exesMarquee 30s linear infinite">
-      <sc-for list="{{ destaques }}" as="d" hint-placeholder-count="3">
-        <div style="width:268px;flex:0 0 auto;margin-right:16px;background:#fff;border-radius:14px;padding:24px;box-shadow:var(--x-shadow);display:flex;flex-direction:column;gap:14px">
-          <span style="width:46px;height:46px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);flex:0 0 auto">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ d.icon }}"></path></svg>
-          </span>
-          <h3 style="font-size:16px;font-weight:700;line-height:1.4">{{ d.t }}</h3>
-        </div>
-      </sc-for>
-      <sc-for list="{{ destaques }}" as="d" hint-placeholder-count="3">
-        <div style="width:268px;flex:0 0 auto;margin-right:16px;background:#fff;border-radius:14px;padding:24px;box-shadow:var(--x-shadow);display:flex;flex-direction:column;gap:14px" aria-hidden="true">
-          <span style="width:46px;height:46px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);flex:0 0 auto">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ d.icon }}"></path></svg>
-          </span>
-          <h3 style="font-size:16px;font-weight:700;line-height:1.4">{{ d.t }}</h3>
-        </div>
-      </sc-for>
-    </div>
-  </div>
   <div style="max-width:1240px;margin:clamp(22px,3vw,34px) auto 0">
     <p style="font-size:12.5px;line-height:1.6;color:var(--x-grafite)">Fonte: Éxes e Comdinheiro (www.comdinheiro.com.br) — 87 FIIs de recebíveis, data-base junho/2026; DY patrimonial = proventos de 12 meses ÷ cota patrimonial contábil; entram no ranking mensal os fundos com dados publicados no respectivo mês (70 a 76 fundos por mês); distribuições de alguns fundos incluem amortizações e eventos não recorrentes. A isenção de Imposto de Renda observa a Lei 11.033/2004 e as condições legais aplicáveis a cada investidor. A rentabilidade passada não representa garantia de rentabilidade futura.</p>
   </div>
@@ -328,21 +302,15 @@ section[id],header[id]{scroll-margin-top:96px}
       <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua-d);text-transform:uppercase">Termos da oferta</span>
       <h2 style="font-size:clamp(26px,3.6vw,44px);font-weight:700;max-width:none;margin:0 auto">Uma oferta secundária,<br>sem emissão de novas cotas.</h2>
     </div>
-    <div style="display:flex;flex-direction:column;gap:clamp(2px,1vw,10px)">
-      <sc-for list="{{ termosRows }}" as="row" hint-placeholder-count="2">
-        <div style="overflow-x:hidden;overflow-y:visible;padding:22px 0;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)">
-          <div style="{{ row.track }}">
-            <sc-for list="{{ row.items }}" as="t" hint-placeholder-count="10">
-              <div style="width:clamp(250px,72vw,300px);min-height:250px;flex:0 0 auto;margin-right:16px;background:#fff;border-radius:16px;box-shadow:var(--x-shadow);padding:24px;display:flex;flex-direction:column">
-                <span style="width:44px;height:44px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);margin-bottom:16px;flex:0 0 auto">
-                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ t.icon }}"></path></svg>
-                </span>
-                <h3 style="font-family:var(--font-heading);font-size:16px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px">{{ t.t }}</h3>
-                <p style="font-size:14px;line-height:1.55;color:var(--x-grafite)">{{ t.v }}</p>
-                <div style="font-family:var(--font-heading);font-size:clamp(22px,2.4vw,28px);font-weight:700;color:var(--x-aqua);line-height:1;margin-top:auto;padding-top:20px">{{ t.hi }}</div>
-              </div>
-            </sc-for>
-          </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(10px,1.6vw,16px)">
+      <sc-for list="{{ termos }}" as="t" hint-placeholder-count="10">
+        <div style="background:#fff;border-radius:14px;box-shadow:var(--x-shadow);padding:16px;display:grid;grid-template-columns:32px 1fr;column-gap:10px;row-gap:4px;min-width:0">
+          <span style="grid-column:1;grid-row:1;width:32px;height:32px;border-radius:9px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);flex:0 0 auto;align-self:start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ t.icon }}"></path></svg>
+          </span>
+          <h3 style="grid-column:2;grid-row:1;align-self:center;font-family:var(--font-heading);font-size:14.5px;font-weight:700;letter-spacing:-.01em;overflow-wrap:break-word">{{ t.t }}</h3>
+          <p style="grid-column:1/3;grid-row:2;font-size:12.5px;line-height:1.48;color:var(--x-grafite);overflow-wrap:break-word;word-break:break-word;hyphens:auto">{{ t.v }}</p>
+          <div style="grid-column:1/3;grid-row:3;font-family:var(--font-heading);font-size:16px;font-weight:700;color:var(--x-aqua);padding-top:2px;overflow-wrap:break-word">{{ t.hi }}</div>
         </div>
       </sc-for>
     </div>
@@ -669,26 +637,13 @@ section[id],header[id]{scroll-margin-top:96px}
   </div>
 </section>
 
-<section id="riscos" data-screen-label="Fatores de risco" style="background:var(--x-tint);padding:clamp(52px,7vw,100px) clamp(16px,4vw,48px)">
+<section id="riscos" data-screen-label="Fatores de risco" style="background:var(--x-tint);padding:clamp(28px,3.6vw,44px) clamp(16px,4vw,48px)">
   <div style="max-width:1240px;margin:0 auto">
-    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:860px;margin:0 auto clamp(26px,3.5vw,40px)">
+    <div style="background:#fff;border-radius:16px;padding:clamp(20px,2.4vw,30px);box-shadow:var(--x-shadow);border-left:4px solid var(--x-aqua-d)">
       <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--x-aqua-d);text-transform:uppercase">Fatores de risco (resumo obrigatório)</span>
-      <h2 style="font-size:clamp(26px,3.6vw,44px);font-weight:700">O investimento nas cotas representa<br>um investimento de risco.</h2>
-    </div>
-    <div style="background:#fff;border-radius:16px;padding:clamp(22px,2.8vw,36px);box-shadow:var(--x-shadow)">
-      <p style="font-size:16.5px;line-height:1.7;color:var(--x-navy)">Em ordem de relevância conforme o Prospecto: risco de crédito; risco macroeconômico; riscos relativos ao setor imobiliário; risco de execução das garantias atreladas aos CRI; risco de liquidez das cotas (o FII é um condomínio fechado, sem resgate de cotas); entre outros. A lista completa está na seção “Fatores de Risco” do Prospecto.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:clamp(12px,2vw,18px);margin-top:clamp(22px,3vw,30px)">
-        <sc-for list="{{ riscos }}" as="r" hint-placeholder-count="5">
-          <div style="background:#fff;border:1px solid var(--x-line);border-radius:16px;padding:20px;min-width:0;display:flex;flex-direction:column;min-height:180px">
-            <span style="width:44px;height:44px;border-radius:12px;background:var(--x-tint);display:inline-flex;align-items:center;justify-content:center;color:var(--x-aqua-d);margin-bottom:16px;flex:0 0 auto">
-              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ r.icon }}"></path></svg>
-            </span>
-            <div style="font-size:15.5px;font-weight:700;font-family:var(--font-heading);line-height:1.35">{{ r.t }}</div>
-            <div style="font-family:var(--font-heading);font-size:22px;font-weight:700;color:var(--x-aqua);line-height:1;margin-top:auto;padding-top:18px">{{ r.n }}</div>
-          </div>
-        </sc-for>
-      </div>
-      <p style="font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.6;color:var(--x-navy);font-weight:700;margin-top:clamp(22px,3vw,30px);padding-top:clamp(18px,2.5vw,26px);border-top:1px solid var(--x-line)">LEIA O PROSPECTO, A LÂMINA E O REGULAMENTO DO FUNDO ANTES DE ACEITAR A OFERTA, EM ESPECIAL A SEÇÃO “FATORES DE RISCO”.</p>
+      <h2 style="font-size:clamp(18px,2vw,22px);font-weight:700;margin-top:8px">O investimento nas cotas representa um investimento de risco.</h2>
+      <p style="font-size:15px;line-height:1.7;color:var(--x-navy);margin-top:12px">Em ordem de relevância conforme o Prospecto: risco de crédito; risco macroeconômico; riscos relativos ao setor imobiliário; risco de execução das garantias atreladas aos CRI; risco de liquidez das cotas (o FII é um condomínio fechado, sem resgate de cotas); entre outros. A lista completa está na seção “Fatores de Risco” do Prospecto.</p>
+      <p style="font-size:14px;line-height:1.6;color:var(--x-navy);font-weight:700;margin-top:14px;padding-top:14px;border-top:1px solid var(--x-line)">LEIA O PROSPECTO, A LÂMINA E O REGULAMENTO DO FUNDO ANTES DE ACEITAR A OFERTA, EM ESPECIAL A SEÇÃO “FATORES DE RISCO”.</p>
     </div>
   </div>
 </section>
@@ -853,21 +808,7 @@ class Component extends DCLogic {
       barSpacer: 'height:' + this.state.avisoH + 'px',
 
 
-      termosRows: (() => {
-        const all = this.termosAll();
-        const a = all.slice(0, 5), b = all.slice(5);
-        return [
-          { track: 'display:flex;width:max-content;animation:exesMarquee 40s linear infinite', items: a.concat(a) },
-          { track: 'display:flex;width:max-content;animation:exesMarqueeRev 46s linear infinite', items: b.concat(b) }
-        ];
-      })(),
-
-      destGridStyle: this.state.narrow
-        ? 'display:none'
-        : 'max-width:1240px;margin:-64px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(18px,2.5vw,26px);position:relative;z-index:5',
-      destCarStyle: this.state.narrow
-        ? 'max-width:1240px;margin:-64px auto 0;position:relative;z-index:5;overflow-x:hidden;overflow-y:visible;padding:14px 0;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)'
-        : 'display:none',
+      destGridStyle: 'max-width:1240px;margin:-64px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(18px,2.5vw,26px);position:relative;z-index:5',
 
 
       heroStats: [
