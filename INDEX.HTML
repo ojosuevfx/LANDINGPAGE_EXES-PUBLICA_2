@@ -51,6 +51,13 @@ section[id],header[id]{scroll-margin-top:96px}
 #tese a[style*="var(--x-cta)"],
 [data-screen-label="A gestora"] a[style*="var(--x-cta)"]{align-self:center!important}
 
+/* ---- Cartões dos pilares (72% / 52% / 19 meses / 5 anos): sempre à esquerda, em qualquer largura ---- */
+#tese [style*="align-items:flex-start"][style*="background:#fff"],
+#tese [style*="align-items:flex-start"][style*="background:#fff"] span,
+#tese [style*="align-items:flex-start"][style*="background:#fff"] b{
+  text-align:left!important;
+}
+
 /* ============================================================
    RESPONSIVIDADE — TABLET E MOBILE
    ============================================================ */
@@ -142,6 +149,36 @@ section[id],header[id]{scroll-margin-top:96px}
   /* Títulos um pouco menores */
   h1{font-size:clamp(25px,7.5vw,32px)!important}
   h2{font-size:clamp(23px,6.5vw,30px)!important}
+}
+
+/* ---- Cartões (ícone + título + texto) mais compactos em tablet/mobile ---- */
+@media (max-width:900px){
+  /* Destaques (grade e carrossel) */
+  [data-screen-label="Destaques"] [style*="box-shadow:var(--x-shadow)"][style*="flex-direction:column"]{
+    padding:14px 16px!important;gap:8px!important}
+  [data-screen-label="Destaques"] [style*="box-shadow:var(--x-shadow)"][style*="flex-direction:column"] > span{
+    width:36px!important;height:36px!important}
+  [data-screen-label="Destaques"] [style*="box-shadow:var(--x-shadow)"][style*="flex-direction:column"] > span svg{
+    width:17px!important;height:17px!important}
+  [data-screen-label="Destaques"] h3{font-size:14.5px!important;line-height:1.35!important}
+
+  /* Termos da oferta */
+  #termos [style*="min-height:250px"]{padding:14px 16px!important;min-height:0!important}
+  #termos [style*="min-height:250px"] > span{width:36px!important;height:36px!important;margin-bottom:8px!important}
+  #termos [style*="min-height:250px"] > span svg{width:16px!important;height:16px!important}
+  #termos [style*="min-height:250px"] h3{font-size:14.5px!important;margin-bottom:4px!important}
+  #termos [style*="min-height:250px"] p{font-size:13px!important;line-height:1.45!important}
+  #termos [style*="min-height:250px"] > div:last-child{padding-top:10px!important}
+
+  /* Fatores de risco */
+  #riscos [style*="min-height:180px"]{padding:14px!important;min-height:0!important}
+  #riscos [style*="min-height:180px"] > span{width:36px!important;height:36px!important;margin-bottom:8px!important}
+  #riscos [style*="min-height:180px"] > span svg{width:16px!important;height:16px!important}
+  #riscos [style*="min-height:180px"] > div:first-of-type{font-size:14px!important}
+  #riscos [style*="min-height:180px"] > div:last-child{font-size:19px!important;padding-top:10px!important}
+
+  /* Bullets da carteira (fundo claro, sem ícone) */
+  [data-screen-label="A carteira em números"] [style*="background:var(--x-tint);border-radius:14px"]{padding:14px 16px!important}
 }
 
 /* ---- "Documentos da oferta": botões lado a lado no mobile/tablet ---- */
@@ -333,9 +370,9 @@ section[id],header[id]{scroll-margin-top:96px}
       <p style="font-size:16.5px;color:var(--x-grafite);max-width:60ch;text-wrap:pretty">O EXES11 investe majoritariamente em crédito imobiliário estruturado (CRIs), com garantias reais e monitoramento independente. A carteira é majoritariamente originada e estruturada pela própria gestora, o que dá mais controle sobre os termos de cada operação.</p>
       <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
         <sc-for list="{{ pilares }}" as="p" hint-placeholder-count="4">
-          <div style="display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:12px;padding:14px 18px">
+          <div style="display:flex;gap:14px;align-items:flex-start;justify-content:flex-start;background:#fff;border-radius:12px;padding:14px 18px;text-align:left">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ba7b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;margin-top:3px" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 12.5l2.5 2.5 4.5-5"></path></svg>
-            <span style="font-size:15.5px;line-height:1.5;min-width:0"><b style="font-family:var(--font-heading);font-weight:700">{{ p.big }}</b> {{ p.body }}</span>
+            <span style="font-size:15.5px;line-height:1.5;min-width:0;text-align:left;flex:1 1 auto"><b style="font-family:var(--font-heading);font-weight:700">{{ p.big }}</b> {{ p.body }}</span>
           </div>
         </sc-for>
       </div>
